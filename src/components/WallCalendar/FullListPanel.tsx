@@ -72,11 +72,18 @@ function ReminderItem({
               {String(idx + 1).padStart(2, '0')}
             </span>
             <div className="flex flex-col">
-              <span className={`text-[12px] font-black text-black uppercase tracking-tight truncate drop-shadow-[0_1px_1px_rgba(255,255,255,0.6)] ${r.completed ? 'line-through opacity-70' : ''}`}>
-                {r.start === r.end ? formatDisplayDate(r.start) : `${formatDisplayDate(r.start)} — ${formatDisplayDate(r.end)}`}
-              </span>
+              <div className="flex items-center gap-2">
+                <span className={`text-[12px] font-black text-black uppercase tracking-tight truncate drop-shadow-[0_1px_1px_rgba(255,255,255,0.6)] ${r.completed ? 'line-through opacity-70' : ''}`}>
+                  {r.start === r.end ? formatDisplayDate(r.start) : `${formatDisplayDate(r.start)} — ${formatDisplayDate(r.end)}`}
+                </span>
+                {r.completed && (
+                  <span className="px-1.5 py-0.5 bg-green-100 text-green-600 text-[8px] font-black rounded uppercase tracking-tighter border border-green-200 shadow-sm inline-block">
+                    Done
+                  </span>
+                )}
+              </div>
               {activeCategories.length > 0 && (
-                <div className="flex flex-wrap gap-1.5 mt-0.5">
+                <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
                   {activeCategories.map(cat => (
                     <span
                       key={cat.id}
@@ -134,7 +141,7 @@ function ReminderItem({
                 onDeleteRange(r.id);
               }
             }}
-            className="w-full bg-transparent border-none p-0 text-[11px] text-slate-950 placeholder:text-black/20 focus:ring-0 resize-none min-h-[20px] font-bold leading-tight hover:underline decoration-black/10 underline-offset-4 transition-all"
+            className={`w-full bg-transparent border-none p-0 text-[11px] text-slate-950 placeholder:text-black/20 focus:ring-0 resize-none min-h-[20px] font-bold leading-tight hover:underline decoration-black/10 underline-offset-4 transition-all ${r.completed ? 'line-through opacity-50' : ''}`}
           />
         </div>
       </div>

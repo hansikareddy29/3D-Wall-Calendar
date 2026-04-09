@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   X
@@ -88,11 +88,15 @@ export default function WallCalendar() {
   const nextRangeColor = RANGE_COLORS[savedRanges.length % RANGE_COLORS.length];
 
   const [direction, setDirection] = useState(1);
+  const dateInputRef = useRef<HTMLInputElement>(null);
 
   // Navigation: Track direction for flip animation
   const kick = (dir: number) => {
     playFlip();
     setDirection(dir);
+    if (dateInputRef.current) {
+      dateInputRef.current.value = '';
+    }
     if (dir > 0) goToNextMonth(); else goToPrevMonth();
   };
 
@@ -290,10 +294,36 @@ export default function WallCalendar() {
                             {currentYear}
                           </p>
                         </div>
-                        <div className="flex items-center gap-1.5 mt-2 bg-white/50 p-1 px-2 rounded-full border border-gray-100 shadow-sm backdrop-blur-sm">
+                        <div className="flex items-center gap-1.5 mt-2 bg-white/50 p-1 pl-2 pr-1 rounded-full border border-gray-100 shadow-sm backdrop-blur-sm">
                           <NavControls onPrev={() => kick(-1)} onNext={() => kick(1)} accentColor={accentColor} />
 
                           <div className="w-[1px] h-4 bg-gray-200 mx-0.5" />
+                          
+                          <input
+                            ref={dateInputRef}
+                            type="date"
+                            title="Jump to date"
+                            className="bg-transparent border-none outline-none text-[10px] font-black text-slate-700 cursor-pointer w-[120px] pl-1 pr-2 py-0 focus:ring-0 uppercase"
+                            style={{ color: accentColor }}
+                            onChange={(e) => {
+                              if (!e.target.value) return;
+                              const [y, m, d] = e.target.value.split('-').map(Number);
+                              
+                              // Chrome aggressively formats partial year typing.
+                              // To avoid wild calendar jumps while typing (like "2" evaluating to 1902 or 0002),
+                              // we wait until the year is in a reasonable modern 4-digit era to trigger the jump.
+                              if (y < 1970 || y > 2100) return;
+                              
+                              const targetDate = new Date(y, m - 1, d);
+                              if (targetDate.getMonth() !== currentMonth || targetDate.getFullYear() !== currentYear) {
+                                playFlip();
+                                setDirection(
+                                  targetDate.getFullYear() > currentYear || (targetDate.getFullYear() === currentYear && targetDate.getMonth() > currentMonth) ? 1 : -1
+                                );
+                                setMonthView(targetDate.getFullYear(), targetDate.getMonth());
+                              }
+                            }}
+                          />
                         </div>
                       </div>
 
@@ -384,10 +414,17 @@ export default function WallCalendar() {
                                   >
                                     <div className="w-0.5 h-3 mt-1 flex-shrink-0 rounded-full" style={{ backgroundColor: item.color }} />
                                     <div className="flex flex-wrap items-center gap-x-2 gap-y-1 flex-1 min-w-0">
-                                      <p className={`text-[11px] leading-tight font-bold text-slate-700 ${item.completed ? 'line-through opacity-50' : ''}`}>
-                                        {item.note || 'Untitled'}
+                                      <p className={`text-[11px] leading-tight font-bold text-slate-700 flex items-center flex-wrap gap-1.5 ${item.completed ? 'opacity-50' : ''}`}>
+                                        <span className={item.completed ? 'line-through' : ''}>
+                                          {item.note || 'Untitled'}
+                                        </span>
+                                        {item.completed && (
+                                          <span className="px-1.5 py-0.5 bg-green-100 text-green-600 text-[8px] font-black rounded uppercase tracking-tighter border border-green-200 inline-block">
+                                            Done
+                                          </span>
+                                        )}
                                         {item.end === todayKey && !item.completed && (
-                                          <span className="ml-2 px-1.5 py-0.5 bg-red-100 text-red-600 text-[8px] font-black rounded uppercase tracking-tighter border border-red-200 inline-block">
+                                          <span className="px-1.5 py-0.5 bg-red-100 text-red-600 text-[8px] font-black rounded uppercase tracking-tighter border border-red-200 inline-block">
                                             Deadline
                                           </span>
                                         )}
