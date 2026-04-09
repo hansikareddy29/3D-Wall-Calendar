@@ -1,54 +1,102 @@
-# TUF Wall Calendar — Interactive Date Range Picker
+# 🗓️ TUF Wall Calendar — Interactive Date Range Picker
 
-A polished, interactive **digital wall calendar** built with **Next.js 16 + TypeScript + Tailwind CSS v4**, closely matching the provided reference image of a physical wall calendar.
+A beautifully crafted **interactive digital wall calendar** built with  
+⚡ **Next.js 16 + TypeScript + Tailwind CSS v4**
 
----
-
-## ✨ Features
-
-### Core Requirements (All Implemented)
-- 🖼️ **Wall Calendar Aesthetic** — Spiral binding, full-width hero image, blue diagonal wave overlay, and Year/Month label exactly matching the reference image
-- 📅 **Monthly Calendar Grid** — 7-column (Mon–Sun) grid with month navigation (prev/next)
-- 🎯 **Date Range Selection** — Click start → hover preview → click end, with distinct visual states for start, end, and in-between days
-- 📝 **Functional Notes Section** — Monthly notes with localStorage persistence (auto-saves with 500ms debounce, shows "✓ Saved" indicator)
-- 📱 **Fully Responsive** — Side-by-side layout on desktop, stacked vertically on mobile
-
-### Creative Enhancements
-- 🌙 **Dark Mode Toggle** — Smooth light/dark theme with 0.3s transition
-- 🎞️ **Smooth Animations** — Hero image crossfade + calendar grid slide animation on month change (Framer Motion)
-- 🖼️ **Month-specific Hero Images** — 12 curated Unsplash images + accent colors tied to each month
-- ⚡ **Micro-interactions** — Date cells scale on hover, buttons animate on press
-- 📊 **Range Chip** — Shows selected range + day count with X to clear
-- 📌 **Today Indicator** — Current date has a ring + dot
+Designed to replicate the charm of a **real hanging wall calendar** while adding powerful, modern task-planning capabilities.
 
 ---
 
-## 🏗 Architecture
+## 🎥 Demo
+
+<video src="./public/Video_Correct.webm" width="100%" controls autoplay loop muted>
+  <a href="./public/Video_Correct.webm">View Demo Video</a>
+</video>
+
+---
+
+## ✨ Key Features
+
+### 🧠 Smart Date Selection & Range Logic
+- 📅 **Single-Day Reminders** — double-click any date to create a 1-day task  
+- 🔁 **Multi-Day Ranges** — click and drag across dates seamlessly  
+- 🔀 **Overlapping Events** — multiple reminders on the same date supported  
+- 🎯 **Accurate Range Highlighting** — handles partial overlaps cleanly  
+- 🚫 **Past Date Blocking** — prevents invalid selections automatically  
+
+---
+
+### 🔗 Deep UI Interconnectivity
+- 🖱️ Hover over tasks → instantly highlights corresponding dates  
+- 📌 Calendar grid and task list are fully synced  
+- ⚡ Real-time visual feedback for better clarity and usability  
+
+---
+
+### ✅ Real-Life Task Management
+- ✔️ Mark tasks as **Done** (auto strikethrough + faded state)  
+- 🗑️ Delete tasks easily  
+- ⏰ Automatic **Deadline indicators** for active tasks  
+
+#### 🏷️ Categories
+Organize tasks with colored tags:
+- 🔴 Urgent  
+- 🟡 Important  
+- 📚 School  
+- 💼 Work  
+- 🧘 Personal  
+
+---
+
+### 🎨 Advanced Seasonal Theming
+- 🌄 12 curated **monthly hero images**
+- 🎨 Dynamic **accent colors** per month
+- 🌿 Soft pastel aesthetic inspired by real-world calendars  
+
+---
+
+### 🎞️ Lifelike Physical Animations
+- 📖 **3D Page Flip** transitions using Framer Motion  
+- 🔊 **Synchronized page flip sound effects**  
+- 🪝 **Hanging pendulum swing effect** for realism  
+
+---
+
+### 📱 Fully Responsive Design
+- 📐 Fluid scaling using `min(800px, 94vw)`
+- 📱 Mobile-friendly stacked layout  
+- 💻 Clean side-by-side layout on desktop  
+- 🎯 Smooth adaptive UI across devices  
+
+---
+
+## 🏗️ Architecture
 
 ```
 src/
   app/
-    layout.tsx          ← Root layout (Google Fonts: Inter + Outfit, metadata)
-    page.tsx            ← Root page
-    globals.css         ← Tailwind v4 + CSS tokens
+    layout.tsx
+    page.tsx
+    globals.css
   components/
     WallCalendar/
-      index.tsx         ← Orchestrator (all state wired here)
-      SpiralBinding.tsx ← Decorative SVG spiral coils
-      HeroImage.tsx     ← Hero photo + SVG wave overlay + month/year label
-      CalendarGrid.tsx  ← 7-col grid with animated month transitions
-      DateCell.tsx      ← Day cell (today/start/end/range/hover states)
-      NotesPanel.tsx    ← Lined textarea with autosave
-      NavControls.tsx   ← Prev/Next month buttons
-      ThemeToggle.tsx   ← Light/dark toggle
+      index.tsx
+      WallHanger.tsx
+      HeroImage.tsx
+      CalendarGrid.tsx
+      DateCell.tsx
+      FullListPanel.tsx
+      NavControls.tsx
   hooks/
-    useCalendar.ts      ← Date logic + range selection state machine
-    useNotes.ts         ← localStorage read/write with debounce
+    useCalendar.ts
+    useRangeNotes.ts
+    usePageFlipSound.ts
   types/
-    calendar.ts         ← TypeScript interfaces
+    calendar.ts
   utils/
-    dateHelpers.ts      ← Month generation, range checks, date formatting
-    heroImages.ts       ← Month → Unsplash image + accent color mapping
+    dateHelpers.ts
+    categories.ts
+    heroImages.ts
 ```
 
 ---
@@ -63,43 +111,20 @@ npm install
 npm run dev
 
 # Open in browser
-open http://localhost:3000
-```
-
-### Build for production
-```bash
-npm run build
-npm start
+http://localhost:3000
 ```
 
 ---
 
-## 🎨 Design Decisions
+## 💡 Highlights
 
-| Decision | Rationale |
-|---|---|
-| **Tailwind CSS v4** | Auto-configured by Next.js 16, no manual config needed |
-| **Framer Motion** | `AnimatePresence` + `motion` for page-flip-like transitions |
-| **Unsplash images** | Free, no API key required, curated per month |
-| **localStorage** | Per the spec — no backend, client-side persistence only |
-| **Mon-Sun week** | Matches the reference image column order |
-| **Accent color per month** | Adds personality, wave color matches hero image mood |
+- 🎯 Clean architecture with reusable hooks  
+- 🎨 Aesthetic-first UI with functional depth  
+- ⚡ Smooth animations + sound integration  
+- 🧠 Thoughtful UX for real-life planning  
 
 ---
 
-## 📱 Responsive Behavior
+## ⭐ If you like this project
 
-- **Desktop (≥640px)**: Notes panel (42% width) + Calendar grid side-by-side below the hero image
-- **Mobile (<640px)**: Notes panel stacks above calendar grid; both are touch-friendly
-
----
-
-## 🔧 Tech Stack
-
-- **Framework**: Next.js 16.2 (App Router)
-- **Language**: TypeScript (strict mode, zero errors)
-- **Styling**: Tailwind CSS v4 + custom CSS variables
-- **Animations**: Framer Motion
-- **Icons**: Lucide React
-- **Images**: Unsplash (via `<img>` with `remotePatterns` in `next.config.ts`)
-- **Persistence**: `localStorage` (client-side only)
+Give it a ⭐ on GitHub and share your feedback!

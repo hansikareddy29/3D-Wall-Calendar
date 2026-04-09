@@ -60,7 +60,6 @@ export default function CalendarGrid({
         ))}
       </div>
 
-      {/* Grid rows — vertical flip matching HeroImage */}
       <AnimatePresence mode="wait">
         <motion.div
           key={monthKey}

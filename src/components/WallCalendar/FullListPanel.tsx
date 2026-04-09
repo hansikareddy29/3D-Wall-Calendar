@@ -221,7 +221,6 @@ export default function FullListPanel({
         </div>
 
         <div className="px-4 py-2 flex flex-col items-center justify-center border-t border-black/5 bg-white/50 backdrop-blur-sm">
-          {/* Footer content removed for cleaner look */}
         </div>
       </div>
     </div>

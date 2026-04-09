@@ -153,11 +153,11 @@ export default function DateCell({
         {day.dayOfMonth}
       </span>
 
-      {/* Hover Range Highlight (Solid Ends + Translucent Bridge) & Tooltip */}
+      {/* Hover Range Highlight Solid at ends and translucent in the middle */}
       <AnimatePresence>
         {hoverStatus.isIn && (
           <>
-            {/* The "Bridge" or "Capsule" background */}
+            {/* The translucent background */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -174,7 +174,7 @@ export default function DateCell({
               }}
             />
 
-            {/* Solid Circle for Start/End */}
+            {/* Solid Circle for Start and End */}
             {(hoverStatus.isStart || hoverStatus.isEnd) && (
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -291,7 +291,7 @@ export default function DateCell({
         );
       })()}
 
-      {/* Today indicator (Enhanced) */}
+      {/* Today indicator */}
       {day.isToday && day.isCurrentMonth && (
         <div 
           className="absolute inset-0 border-[1.5px] border-slate-800 rounded-xl pointer-events-none opacity-90 shadow-sm"

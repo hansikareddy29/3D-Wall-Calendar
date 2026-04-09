@@ -20,13 +20,13 @@ import { RANGE_COLORS } from '@/utils/colors';
 import { QUOTES } from '@/utils/quotes';
 import { CATEGORIES } from '@/utils/categories';
 
-// ── Minimal stacked pages behind main card ──
+//Stacked pages behind main card 
 const STACKED_PAGES = [
   { rotate: -1.8, ty: 5, tx: -5, opacity: 0.82 },
   { rotate: 1.5, ty: 9, tx: 4, opacity: 0.60 },
 ];
 
-// ── Flip animation for the entire card ──
+//Flip animation for the entire card
 const cardFlipVariants = {
   enter: (direction: number) => ({
     rotateX: direction > 0 ? 25 : -100,
@@ -60,7 +60,6 @@ const cardFlipVariants = {
 };
 
 export default function WallCalendar() {
-  // Preload all hero images on mount so flipping months is instant in production
   useEffect(() => {
     if (typeof window !== 'undefined') {
       MONTH_HERO_IMAGES.forEach((data) => {
@@ -113,14 +112,14 @@ export default function WallCalendar() {
     [currentYear, currentMonth]
   );
 
-  // Simplified navigation (removed swing)
+  // Simplified navigation
   const monthKey = `${currentYear}-${currentMonth}`;
 
   // 1. Calculate boundaries of the viewed month as Dates
   const viewStart = useMemo(() => new Date(currentYear, currentMonth, 1), [currentYear, currentMonth]);
   const viewEnd = useMemo(() => new Date(currentYear, currentMonth + 1, 0, 23, 59, 59, 999), [currentYear, currentMonth]);
 
-  // 2. Check if the active selection (range) overlaps with the current view
+  // 2. Check if the active selection overlaps with the current view
   const isSelectionInView = useMemo(() => {
     if (!range.start) return false;
 
@@ -176,8 +175,8 @@ export default function WallCalendar() {
         }}
       />
 
-      {/* ── Pendulum pivot at nail top center ── */}
-      {/* ── Main Assembly Container ── */}
+      {/*  Pendulum pivot at nail top centerx */}
+      {/*  Main Assembly Container */}
       <div className="relative flex flex-col items-center justify-center min-h-screen w-full px-4 overflow-y-auto pt-40 pb-20">
         <style>{`
           @keyframes pendulumSwing {
@@ -185,7 +184,7 @@ export default function WallCalendar() {
             to { transform: rotate(-0.75deg); }
           }
         `}</style>
-        {/* ── Card stack (The primary element centered by Flexbox) ── */}
+        {/* Card stack */}
         <div
           className="relative grid"
           style={{
@@ -197,12 +196,12 @@ export default function WallCalendar() {
             animation: 'pendulumSwing 3s ease-in-out infinite alternate'
           }}
         >
-          {/* WallHanger (Detached from flow, attached to card top) */}
+          {/* WallHanger*/}
           <div 
             className="absolute left-1/2 -translate-x-1/2 pointer-events-none" 
             style={{ 
               width: '100%', 
-              top: 'calc(min(800px, 94vw) * -126 / 800)', // Align clips' jaws securely with card top
+              top: 'calc(min(800px, 94vw) * -126 / 800)', 
               zIndex: 100 
             }}
           >
@@ -228,7 +227,7 @@ export default function WallCalendar() {
                 ))}
               </div>
 
-              {/* ── Main landscape card ── */}
+              {/* Main landscape card */}
               <motion.div
                 key={monthKey}
                 custom={direction}
@@ -248,7 +247,7 @@ export default function WallCalendar() {
                   zIndex: 10,
                 }}
               >
-                {/* ── Top strip ── */}
+                {/* Top strip */}
                 <div
                   style={{
                     height: '8px',
@@ -437,8 +436,6 @@ export default function WallCalendar() {
                             </div>
                           )}
                         </div>
-
-                        {/* Spacer to maintain vertical dimensions as requested */}
                         <div className="text-center px-4 pb-4">
                           <p className="text-[11px] text-slate-500 italic leading-relaxed font-medium">
                             &ldquo;{currentQuote}&rdquo;
@@ -450,8 +447,6 @@ export default function WallCalendar() {
                 </div>
               </motion.div>
             </AnimatePresence>
-
-            {/* Ground shadow for the main card */}
             <div style={{
               position: 'absolute',
               bottom: 0,

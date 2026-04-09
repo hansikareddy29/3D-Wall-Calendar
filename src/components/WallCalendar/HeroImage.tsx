@@ -11,12 +11,8 @@ interface HeroImageProps {
   direction: number;
 }
 
-/**
- * Left-panel portrait image for landscape calendar layout.
- * - Fills full height of the card
- * - Crossfade animation on month change
- * - Right-edge gradient fades to white/dark to blend into calendar panel
- */
+// Left-panel portrait image for landscape calendar layout.
+ 
 export default function HeroImage({ year, month, heroData, direction: _direction }: HeroImageProps) {
   const monthKey = `${year}-${month}`;
 
@@ -41,7 +37,6 @@ export default function HeroImage({ year, month, heroData, direction: _direction
             }}
           />
 
-          {/* Grain overlay for dreamy texture */}
           <div
             className="absolute inset-0 pointer-events-none opacity-[0.02]"
             style={{
@@ -51,17 +46,15 @@ export default function HeroImage({ year, month, heroData, direction: _direction
 
           {/* Responsive gradient — blends image seamlessly into calendar panel */}
           <div className="absolute inset-0 pointer-events-none transition-all duration-300">
-            {/* Desktop Fade (Right) */}
+            {/* Desktop Fade at right side */}
             <div 
               className="hidden sm:block absolute inset-y-0 right-0 w-[15%] bg-gradient-to-r from-transparent to-white"
             />
-            {/* Mobile Fade (Bottom) */}
+            {/* Mobile Fade in the bottom */}
             <div 
               className="block sm:hidden absolute inset-x-0 bottom-0 h-[10%] bg-gradient-to-b from-transparent to-white"
             />
           </div>
-
-          {/* Bottom gradient removed for maximum clarity */}
         </motion.div>
       </AnimatePresence>
     </div>

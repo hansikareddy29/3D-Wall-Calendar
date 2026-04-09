@@ -20,7 +20,7 @@ export type SelectionPhase = 'idle' | 'selecting'; // idle = no start, selecting
 
 export interface SavedRange {
   id: string;
-  start: string; // ISO format or date key
+  start: string; 
   end: string;
   color: string;
   note: string;

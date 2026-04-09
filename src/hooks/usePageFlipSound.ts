@@ -2,18 +2,12 @@
 
 import { useRef, useCallback, useEffect } from 'react';
 
-/**
- * usePageFlipSound — preloads and plays the requested mp3 recording for a page flip
- * using the Web Audio API to achieve zero-latency playback.
- */
 export function usePageFlipSound() {
   const audioCtxRef = useRef<AudioContext | null>(null);
   const audioBufferRef = useRef<AudioBuffer | null>(null);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    
-    // Initialize AudioContext
     const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
     if (!AudioContextClass) return;
     

@@ -1,10 +1,7 @@
 'use client';
-
-import React from 'react';
-
-// ── Landscape card dimensions ──
+//  Landscape card dimensions 
 const CARD_W = 800;
-const CX = CARD_W / 2;   // 400 — nail center x
+const CX = CARD_W / 2;   // 400 => nail center x
 
 // Left clip at 10% of card width, right at 90%
 const C1X = 80;    // left clothespin center x
@@ -12,7 +9,7 @@ const C2X = 720;   // right clothespin center x
 const NAIL_Y = 14;
 const CLIP_TOP_Y = 100; // where rope arrives at top of clip gap
 
-// ── Wooden clothespin shape (SVG) ──
+// Wooden clothespin shape  
 // Drawn as two wooden arms, straddling the card top edge
 function Clothespin({ cx, y }: { cx: number; y: number }) {
   const AW = 9;    // arm half-width
@@ -77,8 +74,6 @@ function Clothespin({ cx, y }: { cx: number; y: number }) {
         strokeWidth={1}
         opacity={0.55}
       />
-
-      {/* Spring coil */}
       <ellipse cx={cx} cy={springY} rx={6.5} ry={6.5} fill="none" stroke="#8a8a8a" strokeWidth={2.2} />
       <ellipse cx={cx} cy={springY} rx={4} ry={4} fill="none" stroke="#b0b0b0" strokeWidth={1.2} />
       <circle cx={cx} cy={springY} r={1.5} fill="#aaa" />
@@ -92,7 +87,7 @@ export default function WallHanger() {
       className="relative select-none pointer-events-none"
       style={{ width: 'min(800px, 94vw)', height: 'auto', aspectRatio: '800 / 160', zIndex: 40 }}
     >
-      {/* ── SVG: rope strands + clothespins + nail ── */}
+      {/* SVG: rope strands + clothespins + nail */}
       <svg
         viewBox={`0 0 ${CARD_W} 160`}
         width="100%"
@@ -126,17 +121,17 @@ export default function WallHanger() {
           </mask>
         </defs>
 
-        {/* ══ Nail Shank (under rope) ══ */}
+        {/* Nail Shank (under rope) */}
         <rect x={CX - 2.5} y={NAIL_Y - 2} width={5} height={12} rx={1} fill="#707070" opacity={0.8} />
         
-        {/* ══ Wall Shadow for the assembly ══ */}
+        {/* Wall Shadow for the assembly */}
         <ellipse cx={CX} cy={NAIL_Y - 2} rx={11} ry={4} fill="black" opacity={0.15} filter="url(#nailShadow)" />
 
-        {/* ══ Clothespins (Rendered BEFORE rope strands so rope is ABOVE them) ══ */}
+        {/* Clothespins*/}
         <Clothespin cx={C1X} y={CLIP_TOP_Y} />
         <Clothespin cx={C2X} y={CLIP_TOP_Y} />
 
-        {/* ══ Left rope strand ══ */}
+        {/* Left rope strand */}
         {/* Shadow */}
         <path d={`M ${CX} ${NAIL_Y} C ${CX - 40} 55, ${C1X + 20} 85, ${C1X} ${CLIP_TOP_Y}`}
           fill="none" stroke="#7a5c38" strokeWidth={2.2} strokeLinecap="round"
@@ -150,7 +145,7 @@ export default function WallHanger() {
           fill="none" stroke="#e8c898" strokeWidth={1.4} strokeLinecap="round"
           strokeDasharray="5 4" opacity={0.78} mask="url(#lClipMask)" />
 
-        {/* ══ Right rope strand ══ */}
+        {/* Right rope strand */}
         <path d={`M ${CX} ${NAIL_Y} C ${CX + 40} 55, ${C2X - 20} 85, ${C2X} ${CLIP_TOP_Y}`}
           fill="none" stroke="#7a5c38" strokeWidth={2.2} strokeLinecap="round"
           mask="url(#rClipMask)" opacity={0.55} />
@@ -161,15 +156,15 @@ export default function WallHanger() {
           fill="none" stroke="#e8c898" strokeWidth={1.4} strokeLinecap="round"
           strokeDasharray="5 4" opacity={0.78} mask="url(#rClipMask)" />
 
-        {/* ══ Knot at nail ══ */}
+        {/* Knot at nail */}
         <ellipse cx={CX} cy={NAIL_Y} rx={7} ry={6} fill="#b88848" />
         <ellipse cx={CX - 1} cy={NAIL_Y - 1.5} rx={4} ry={3} fill="#ddb870" opacity={0.75} />
         <ellipse cx={CX + 2} cy={NAIL_Y + 1.5} rx={2.5} ry={2} fill="#906030" opacity={0.55} />
 
-        {/* ══ Nail Head ══ */}
+        {/* Nail Head */}
         <circle cx={CX} cy={NAIL_Y} r={8} fill="url(#nailGradient)" stroke="rgba(0,0,0,0.2)" strokeWidth={0.5} />
 
-        {/* Rope tail visible in the clothespin gap (between arms, above spring) */}
+        {/* Rope tail visible in the clothespin gap  */}
         <line x1={C1X} y1={CLIP_TOP_Y - 4} x2={C1X} y2={CLIP_TOP_Y + 16}
           stroke="#c49a6c" strokeWidth={2.5} opacity={0.6} strokeLinecap="round" />
         <line x1={C2X} y1={CLIP_TOP_Y - 4} x2={C2X} y2={CLIP_TOP_Y + 16}
