@@ -97,15 +97,11 @@ export default function WallCalendar() {
   const nextRangeColor = RANGE_COLORS[savedRanges.length % RANGE_COLORS.length];
 
   const [direction, setDirection] = useState(1);
-  const dateInputRef = useRef<HTMLInputElement>(null);
 
   // Navigation: Track direction for flip animation
   const kick = (dir: number) => {
     playFlip();
     setDirection(dir);
-    if (dateInputRef.current) {
-      dateInputRef.current.value = '';
-    }
     if (dir > 0) goToNextMonth(); else goToPrevMonth();
   };
 
@@ -312,34 +308,6 @@ export default function WallCalendar() {
                         </div>
                         <div className="flex items-center gap-1.5 mt-2 bg-white/50 p-1 pl-2 pr-1 rounded-full border border-gray-100 shadow-sm backdrop-blur-sm">
                           <NavControls onPrev={() => kick(-1)} onNext={() => kick(1)} accentColor={accentColor} />
-
-                          <div className="w-[1px] h-4 bg-gray-200 mx-0.5" />
-                          
-                          <input
-                            ref={dateInputRef}
-                            type="date"
-                            title="Jump to date"
-                            className="bg-transparent border-none outline-none text-[10px] font-black text-slate-700 cursor-pointer w-[120px] pl-1 pr-2 py-0 focus:ring-0 uppercase"
-                            style={{ color: accentColor }}
-                            onChange={(e) => {
-                              if (!e.target.value) return;
-                              const [y, m, d] = e.target.value.split('-').map(Number);
-                              
-                              // Chrome aggressively formats partial year typing.
-                              // To avoid wild calendar jumps while typing (like "2" evaluating to 1902 or 0002),
-                              // we wait until the year is in a reasonable modern 4-digit era to trigger the jump.
-                              if (y < 1970 || y > 2100) return;
-                              
-                              const targetDate = new Date(y, m - 1, d);
-                              if (targetDate.getMonth() !== currentMonth || targetDate.getFullYear() !== currentYear) {
-                                playFlip();
-                                setDirection(
-                                  targetDate.getFullYear() > currentYear || (targetDate.getFullYear() === currentYear && targetDate.getMonth() > currentMonth) ? 1 : -1
-                                );
-                                setMonthView(targetDate.getFullYear(), targetDate.getMonth());
-                              }
-                            }}
-                          />
                         </div>
                       </div>
 
