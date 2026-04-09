@@ -9,8 +9,9 @@ Designed to replicate the charm of a **real hanging wall calendar** while adding
 
 ## 🎥 Demo
 
-<video src="./public/Video_Correct.webm" width="100%" controls autoplay loop muted>
-  <a href="./public/Video_Correct.webm">View Demo Video</a>
+<video controls width="100%">
+  <source src="./public/Video_Correct.webm" type="video/webm" />
+  <a href="https://github.com/hansikareddy29/tuf-calendar-frontend/raw/main/public/Video_Correct.webm">Watch the Demo Video</a>
 </video>
 
 ---
