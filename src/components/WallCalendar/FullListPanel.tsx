@@ -197,7 +197,7 @@ export default function FullListPanel({
           {monthReminders.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center px-10 opacity-20">
               <Clock size={16} className="text-slate-900 mb-3" />
-              <p className="text-[10px] font-black uppercase tracking-widest text-slate-900">No items found.</p>
+              <p className="text-[10px] font-black uppercase tracking-widest text-slate-900">Hurrayyy no reminders!!</p>
             </div>
           ) : (
             <div className="space-y-3 pb-4">

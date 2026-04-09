@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   X
@@ -60,6 +60,15 @@ const cardFlipVariants = {
 };
 
 export default function WallCalendar() {
+  // Preload all hero images on mount so flipping months is instant in production
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      MONTH_HERO_IMAGES.forEach((data) => {
+        const img = new Image();
+        img.src = data.url;
+      });
+    }
+  }, []);
   const {
     currentYear,
     currentMonth,
@@ -174,7 +183,12 @@ export default function WallCalendar() {
       {/* ── Pendulum pivot at nail top center ── */}
       {/* ── Main Assembly Container ── */}
       <div className="relative flex flex-col items-center justify-center min-h-screen w-full px-4 overflow-y-auto pt-40 pb-20">
-        
+        <style>{`
+          @keyframes pendulumSwing {
+            from { transform: rotate(0.75deg); }
+            to { transform: rotate(-0.75deg); }
+          }
+        `}</style>
         {/* ── Card stack (The primary element centered by Flexbox) ── */}
         <div
           className="relative grid"
@@ -183,6 +197,8 @@ export default function WallCalendar() {
             paddingBottom: '14px',
             perspective: '1500px',
             zIndex: 10,
+            transformOrigin: '50% calc(min(800px, 94vw) * -112 / 800)',
+            animation: 'pendulumSwing 3s ease-in-out infinite alternate'
           }}
         >
           {/* WallHanger (Detached from flow, attached to card top) */}
